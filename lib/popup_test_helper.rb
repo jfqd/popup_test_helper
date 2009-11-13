@@ -34,7 +34,7 @@ module ActionView::Helpers
   if (active == true) {
     elem.innerHTML = '#{message}';
   } else {
-    elem.parentNode.removeChild(div);
+    elem.parentNode.removeChild(elem);
   }
   function isIE() {
     return /msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent);
