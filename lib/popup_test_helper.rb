@@ -19,18 +19,25 @@ module ActionView::Helpers
     def popup_test_helper(message=nil, title=nil, result='')
       message = message || 'Popups need to be allowed for 3D-Secure verification!'
       title = title || 'Popup blocker test for 3D-Secure verification'
-      result << %|<div class="error" id="popup_blocker_msg"><noscript>#{message}</noscript></div>|
+      result << %|<div class='popup_blocker_msg' id='popup_blocker_msg'><noscript>#{message}</noscript></div>|
       result << javascript_tag(%|
   var active = true;
-  var w = window.open('','#{title}','width=100,height=100');
-  if (null != w) {
-    w.blur();
-    active = w.closed;
-    w.close();
+  var title = '#{message}';
+  if (isIE() == true) { title = ''; }
+  var elem = document.getElementById('popup_blocker_msg');
+  var wind = window.open('',title,'width=100,height=100');
+  if (null != wind) {
+    wind.blur();
+    active = wind.closed;
+    wind.close();
   }
   if (active == true) {
-    var msg_div = document.getElementById('popup_blocker_msg');
-    msg_div.innerHTML = '#{message}';
+    elem.innerHTML = '#{message}';
+  } else {
+    elem.parentNode.removeChild(div);
+  }
+  function isIE() {
+    return /msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent);
   }
 |)
       return result

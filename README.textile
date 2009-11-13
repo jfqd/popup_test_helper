@@ -2,12 +2,14 @@ h1. Popup Test Helper
 
 Created by: Stefan Husch (free2b AT blun DOT org), 2009-11-13
 
-popup_test_helper method creates HTML and Javascript code to test if popups are blocked by the browser. You might need it for dealing with 3D-Secure credit card verification.
+Popup Test Helper is a Ruby On Rails plugin. It adds a popup_test_helper method which creates HTML and Javascript code to test if popups are blocked by the browser. You might need it for dealing with 3D-Secure credit card verification.
+
+The containing Javascript code tries to open a new window. If this fails a HTML div element with the text 'Popups need to be allowed for 3D-Secure verification!' is inserted. You may style it with css (a sass sample could be found in public/stylesheets).
 
 If Javascript is turned off it will graceful degrade showing a message that 'Popups need to be allowed for 3D-Secure verification!'.
 
 Tested on Mac with: Safari 4.0.4, Firefox 3.5.4, iCab 4.7.0, Camino 1.6.10
-Tested on Windows with: 
+Tested on Windows with: IE6, IE7, IE8, Firefox 3.0.15, Safari 4.0.3
 
 h2. Installation
 
