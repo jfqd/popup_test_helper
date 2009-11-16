@@ -12,13 +12,14 @@
 # <%= popup_test_helper(message) -%>
 #
 #   message: message which will be inserted if popups are not allowed
-#   title:   title of the popup window
+#   nojsmsg: message rendered if Javascript is turned off
 
 module ActionView::Helpers
   module PopupTestHelper
-    def popup_test_helper(message=nil, result='')
-      message = message || 'Popups need to be allowed for 3D-Secure verification!'
-      result << %|<div class='popup_blocker_msg' id='popup_blocker_msg'><noscript>#{message}</noscript></div>|
+    def popup_test_helper(message=nil, nojsmsg=nil, result='')
+      message = message || 'Popups need to be allowed for 3D-Secure verification of your credit card!'
+      nojsmsg = nojsmsg || 'Popups and JavaScript need to be allowed for 3D-Secure verification of your credit card!'
+      result << %(<div class='popup_blocker_msg' id='popup_blocker_msg'><noscript>#{nojsmsg}</noscript></div>)
       result << javascript_tag(%*
 try {
   var active = true;
