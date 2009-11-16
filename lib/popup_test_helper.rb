@@ -9,16 +9,15 @@
 # 
 # == Options
 #
-# <%= popup_test_helper(message, title) -%>
+# <%= popup_test_helper(message) -%>
 #
 #   message: message which will be inserted if popups are not allowed
 #   title:   title of the popup window
 
 module ActionView::Helpers
   module PopupTestHelper
-    def popup_test_helper(message=nil, title=nil, result='')
+    def popup_test_helper(message=nil, result='')
       message = message || 'Popups need to be allowed for 3D-Secure verification!'
-      title = title || 'Popup blocker test for 3D-Secure verification'
       result << %|<div class='popup_blocker_msg' id='popup_blocker_msg'><noscript>#{message}</noscript></div>|
       result << javascript_tag(%*
 try {
@@ -26,7 +25,7 @@ try {
   var title = '#{message}';
   var elem = document.getElementById('popup_blocker_msg');
   var win = null;
-  wind = window.open('',title,'width=100,height=100');
+  wind = window.open('','','width=100,height=100');
   if (null != wind) {
     wind.blur();
     active = wind.closed;
