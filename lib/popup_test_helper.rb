@@ -23,7 +23,6 @@ module ActionView::Helpers
       result << javascript_tag(%*
 try {
   var active = true;
-  var title = '#{message}';
   var elem = document.getElementById('popup_blocker_msg');
   var win = null;
   wind = window.open('','','width=100,height=100');
