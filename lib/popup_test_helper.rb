@@ -20,12 +20,13 @@ module ActionView::Helpers
       message = message || 'Popups need to be allowed for 3D-Secure verification!'
       title = title || 'Popup blocker test for 3D-Secure verification'
       result << %|<div class='popup_blocker_msg' id='popup_blocker_msg'><noscript>#{message}</noscript></div>|
-      result << javascript_tag(%|
+      result << javascript_tag(%*
+try {
   var active = true;
   var title = '#{message}';
-  if (isIE() == true) { title = ''; }
   var elem = document.getElementById('popup_blocker_msg');
-  var wind = window.open('',title,'width=100,height=100');
+  var win = null;
+  wind = window.open('',title,'width=100,height=100');
   if (null != wind) {
     wind.blur();
     active = wind.closed;
@@ -36,10 +37,8 @@ module ActionView::Helpers
   } else {
     elem.parentNode.removeChild(elem);
   }
-  function isIE() {
-    return /msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent);
-  }
-|)
+} catch(err) {alert('#{message}');}
+      *)
       return result
     end
   end
